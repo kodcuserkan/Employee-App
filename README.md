@@ -1,0 +1,1 @@
+Basic employee app writen in expo-cli and React-Native
