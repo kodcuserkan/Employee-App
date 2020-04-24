@@ -5,9 +5,9 @@ import { Button, TextInput } from 'react-native-paper';
 const AddUser = () => {
 
     const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
+    const [position, setPosition] = useState("");
     const [salary, setSalary] = useState("");
     const [picture, setPicture] = useState("");
     const [modal, setModal] = useState(false);
@@ -16,29 +16,20 @@ const AddUser = () => {
     return (
         <View style={style.ana}>
             <TextInput
-                label='Ad'
+                label='Ad-Soyad'
                 value={name}
-                placeholder="Lütfen adınızı girin"
+                placeholder="Lütfen ad/soyad girin"
                 style={style.textInput}
                 keyboardType="ascii-capable"
                 onChangeText={text => setName(text)}
                 mode="outlined"
                 theme={theme}
             />
-            <TextInput
-                label='Soyad'
-                value={surname}
-                placeholder="Lütfen soyadınızı girin"
-                style={style.textInput}
-                keyboardType="ascii-capable"
-                onChangeText={text => setSurname(text)}
-                mode="outlined"
-                theme={theme}
-            />
+
             <TextInput
                 label='Email'
                 value={email}
-                placeholder="Lütfen e-posta adresinizi girin"
+                placeholder="Lütfen e-posta adresi girin"
                 style={style.textInput}
                 keyboardType="email-address"
                 onChangeText={text => setEmail(text)}
@@ -48,7 +39,7 @@ const AddUser = () => {
             <TextInput
                 label='Telefon'
                 value={phone}
-                placeholder="Lütfen telefonunuzu girin"
+                placeholder="Lütfen telefonu numarası girin"
                 style={style.textInput}
                 keyboardType="phone-pad"
                 onChangeText={text => setPhone(text)}
@@ -56,9 +47,19 @@ const AddUser = () => {
                 theme={theme}
             />
             <TextInput
+                label='Departman'
+                value={position}
+                placeholder="Lütfen departmanı girin"
+                style={style.textInput}
+                keyboardType="ascii-capable"
+                onChangeText={text => setPosition(text)}
+                mode="outlined"
+                theme={theme}
+            />
+            <TextInput
                 label='Maaş'
                 value={salary}
-                placeholder="Lütfen soyadınızı girin"
+                placeholder="Lütfen maaş girin"
                 style={style.textInput}
                 keyboardType="numeric"
                 onChangeText={text => setSalary(text)}

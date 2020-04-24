@@ -4,8 +4,10 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
-const Profile = () => {
+const Profile = (props) => {
 
+    const {id, phone, url, name, position, email, salary } = props.route.params.d ;
+    // console.log(id, phone, url, name, position, email, salary)
     const  call = async (number) => {
 
         try{
@@ -27,32 +29,32 @@ const Profile = () => {
             />
             <View style={style.profImage}>
                 <Image
-                    source={{ uri: "https://images.unsplash.com/photo-1558216144-fef86b75da36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80" }}
+                    source={{ uri: url }}
                     style={style.Image}
                 />
             </View>
             <View style={style.title}>
-                <Title style={{ fontSize: 22 }}>Hasan Göçen</Title>
-                <Text style={style.myText}>WEB Developer</Text>
+                <Title style={{ fontSize: 22 }}>{name}</Title>
+                <Text style={style.myText}>{position}</Text>
             </View>
             <Card style={style.myCardStyle} onPress={()=> {
-                Linking.openURL("mailto:hasangocen2777666@gmail.com");
+                Linking.openURL(`mailto:${email}`);
             }}>
                 <View style={style.myViewStyle}>
                     <MaterialIcons name="email" size={32} color={"#006aff"} />
-                    <Text style={style.myEmail}>hasangocen2777666@gmail.com</Text>
+                    <Text style={style.myEmail}>{email}</Text>
                 </View>
             </Card>
-            <Card style={style.myCardStyle} onPress={() =>  call("00905555555555")}>
+            <Card style={style.myCardStyle} onPress={() =>  call(phone)}>
                 <View style={style.myViewStyle}>
                     <Entypo name="phone" size={32} color={"#006aff"} />
-                    <Text style={style.myEmail}>+90-555-555 55 55</Text>
+                    <Text style={style.myEmail}>{phone}</Text>
                 </View>
             </Card>
             <Card style={style.myCardStyle}>
                 <View style={style.myViewStyle}>
                     <MaterialIcons name="attach-money" size={32} color={"#006aff"} />
-                    <Text style={style.myEmail}>5.000 TL</Text>
+                    <Text style={style.myEmail}>{salary}</Text>
                 </View>
             </Card>
             <View style={style.buttonDiv}>
