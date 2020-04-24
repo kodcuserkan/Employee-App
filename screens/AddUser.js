@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, View } from 'react-native';
+import { Modal, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 
 const AddUser = () => {
