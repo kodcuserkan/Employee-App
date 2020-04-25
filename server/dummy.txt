@@ -1,0 +1,8 @@
+_id: 5ea4a076e8f9757d7b7d69a7,
+  name: 'Serkan Akman',
+  phone: '023203230230',
+  url: 'someurl',
+  position: 'web dev',
+  email: 'sasas@dsdd.com',
+  salary: '2323',
+  __v: 0
