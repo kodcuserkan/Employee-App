@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, View } from 'react-native';
+import { Modal, View, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 const AddUser = () => {
 
@@ -12,7 +14,75 @@ const AddUser = () => {
     const [picture, setPicture] = useState("");
     const [modal, setModal] = useState(false);
 
+    const handleUpload = async (image) => {
+        let fd = new FormData();
+        fd.append('file', image);
+        fd.append('upload_preset','empapp');
+        fd.append('cloud_name','akmanserkan65');
 
+        fetch('https://api.cloudinary.com/v1_1/akmanserkan65/image/upload', {
+            method:'post',
+            body: fd
+        }).then(res => res.json()).then(data=> {
+            console.log(data);
+            setPicture(data.url);
+            setModal(false);
+        })
+    }
+
+    const pickImageFromGalery = async () => {
+        let { granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      
+        if (granted) {
+            let data = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes:ImagePicker.MediaTypeOptions.Images,
+                allowsEditing:true,
+                aspect:[4,3],
+                quality:0.5
+            });
+            if (!data.cancelled) {
+                let image = {
+                    uri: data.uri,
+                    type: `test/${data.uri.split(".")[1]}`,
+                    name: `test/${data.uri.split(".")[0]}`
+                }
+                //console.log(image);
+                handleUpload(image);
+            }else{
+                console.log("iptal edildi");
+            }
+
+        } else {
+           Alert.alert("Lütfen önce cihazınızın ayarlar menüsünden ugulamaya galerinize erişme izni veriniz.");
+        }
+    }
+    const pickImageFromCamera = async () => {
+        let { granted } = await Permissions.askAsync(Permissions.CAMERA);
+
+        if ( granted ) {
+            let data = await ImagePicker.launchCameraAsync({
+                mediaTypes:ImagePicker.MediaTypeOptions.Images,
+                allowsEditing:true,
+                aspect:[4,3],
+                quality:0.5
+            });
+            if (!data.cancelled) {
+                let image = {
+                    uri: data.uri,
+                    type: `test/${data.uri.split(".")[1]}`,
+                    name: `test/${data.uri.split(".")[0]}`
+                }
+                //console.log(image);
+                handleUpload(image);
+
+            }else{
+                console.log("iptal edildi");
+            }
+
+        } else {
+            Alert.alert("Lütfen önce cihazınızın ayarlar menüsünden ugulamaya kameranıza erişme izni veriniz.");
+        }
+    }
     return (
         <View style={style.ana}>
             <TextInput
@@ -67,7 +137,7 @@ const AddUser = () => {
                 theme={theme}
             />
             <Button
-                icon="upload"
+                icon={picture ==='' ? 'upload' : 'check'}
                 mode="contained"
                 style={style.textInput}
                 theme={theme}
@@ -96,7 +166,7 @@ const AddUser = () => {
                             icon="camera"
                             theme={theme}
                             mode="contained"
-                            onPress={() => console.log("Foto çek")}
+                            onPress={() => pickImageFromCamera()}
                         >
                             Fotoğraf Çek
                         </Button>
@@ -104,7 +174,7 @@ const AddUser = () => {
                             icon="folder"
                             theme={theme}
                             mode="contained"
-                            onPress={() => console.log("Galeriden seç")}
+                            onPress={() => pickImageFromGalery()}
                         >
                             Galeriden seç
                         </Button>
